@@ -12,7 +12,7 @@ using bazarappka.Models;
 namespace bazarappka.Migrations
 {
     [DbContext(typeof(BazarContext))]
-    [Migration("20251029013211_Initial")]
+    [Migration("20251029020325_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
