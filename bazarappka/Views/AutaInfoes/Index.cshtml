@@ -1,0 +1,87 @@
+﻿@model IEnumerable<bazarappka.Models.AutaInfo>
+
+@{
+    ViewData["Title"] = "Vehicle List";
+}
+
+<h1>Vehicle List</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">Add Vehicle</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p class="no-vehicles-message">No vehicles listed yet.</p>
+}
+else
+{
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th style="border: 1px solid #dee2e6;">@Html.DisplayNameFor(model => model.Manufacturer)</th>
+                <th style="border: 1px solid #dee2e6;">@Html.DisplayNameFor(model => model.Model)</th>
+                <th style="border: 1px solid #dee2e6;">@Html.DisplayNameFor(model => model.Year)</th>
+                <th style="border: 1px solid #dee2e6;">@Html.DisplayNameFor(model => model.Body)</th>
+                <th style="border: 1px solid #dee2e6;">@Html.DisplayNameFor(model => model.LicensePlate)</th>
+                <th style="border: 1px solid #dee2e6;">@Html.DisplayNameFor(model => model.Condition)</th>
+                <th style="border: 1px solid #dee2e6;">@Html.DisplayNameFor(model => model.ListedSince)</th>
+                <th style="border: 1px solid #dee2e6;" class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+                @foreach (var item in Model)
+                {
+                        <tr class="vehicle-row">
+                            <td>@Html.DisplayFor(modelItem => item.Manufacturer)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Model)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Year)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Body)</td>
+                            <td>@Html.DisplayFor(modelItem => item.LicensePlate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Condition)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ListedSince)</td>
+                            <td class="text-end actions-cell">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-1">Details</a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                            </td>
+                        </tr>
+                }
+        
+        </tbody>
+    </table>
+    }
+
+<style>
+    .no-vehicles-message {
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-top: 2rem;
+        color: #555;
+    }
+</style>
+
+<style>
+    .vehicle-row {
+        transition: background-color 0.2s;
+    }
+
+    .vehicle-row:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+
+    .actions-cell .btn {
+        min-width: 70px;
+    }
+
+    th {
+        font-weight: 600;
+        text-align: left;
+        padding: 0.75rem;
+    }
+
+    td {
+        padding: 0.75rem;
+    }
+</style>

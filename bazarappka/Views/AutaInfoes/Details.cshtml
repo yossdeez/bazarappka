@@ -1,0 +1,80 @@
+﻿@model bazarappka.Models.AutaInfo
+
+@{
+    ViewData["Title"] = "Vehicle Details";
+}
+
+<h1>Vehicle Details</h1>
+<p class="text-muted">Overview of the selected vehicle information.</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4 class="mt-3">General Info</h4>
+        <hr />
+        <div class="mb-2"><strong>Manufacturer:</strong> @Model.Manufacturer</div>
+        <div class="mb-2"><strong>Model:</strong> @Model.Model</div>
+        <div class="mb-2"><strong>Year:</strong> @Model.Year</div>
+        <div class="mb-2"><strong>Condition:</strong> @Model.Condition</div>
+        <div class="mb-2"><strong>Body:</strong> @Model.Body</div>
+
+        <h4 class="mt-4">Technical Specifications</h4>
+        <hr />
+        <div class="mb-2"><strong>Fuel:</strong> @Model.Fuel</div>
+        <div class="mb-2"><strong>Mileage (km):</strong> @Model.Mileage</div>
+    </div>
+
+    <div class="col-md-6">
+        <h4 class="mt-3">Other Details</h4>
+        <hr />
+        <div class="mb-2"><strong>License Plate:</strong> @Model.LicensePlate</div>
+        <div class="mb-2"><strong>Listed Since:</strong> @Model.ListedSince</div>
+        <div class="mb-2"><strong>Other Details:</strong></div>
+        <div class="border rounded p-2 bg-light" style="min-height:80px;">
+            @if (!string.IsNullOrWhiteSpace(Model.OtherDetails))
+            {
+                @Model.OtherDetails
+            }
+            else
+            {
+                    <span class="text-muted fst-italic">No additional details provided.</span>
+            }
+        </div>
+
+        <div class="form-group mt-3 d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    h1 {
+        font-size: 1.75rem;
+        font-weight: 600;
+    }
+
+    h4 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-top: 0.75rem;
+        margin-bottom: 0.25rem;
+    }
+
+    hr {
+        margin-top: 0.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .mb-2 {
+        margin-bottom: 0.4rem !important;
+    }
+
+    .btn {
+        min-width: 120px;
+    }
+
+    .border.rounded.p-2.bg-light {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+</style>

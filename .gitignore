@@ -1,0 +1,10 @@
+﻿# Visual Studio / .NET
+bin/
+obj/
+*.user
+*.suo
+*.vs/
+*.db
+*.mdf
+appsettings.Development.json
+SeedData.json

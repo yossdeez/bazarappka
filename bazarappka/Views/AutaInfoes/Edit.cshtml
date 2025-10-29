@@ -1,0 +1,181 @@
+﻿@model bazarappka.Models.AutaInfo
+
+@{
+    ViewData["Title"] = "Edit Vehicle";
+}
+
+<h1>Edit Vehicle</h1>
+<p class="text-muted"><underlined>Fields marked with * are required.</underlined></p>
+
+<form asp-action="Edit" id="vehicle-form">
+    <div class="row">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <h4 class="mt-3">General Info</h4>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label">*Manufacturer</label>
+                <input asp-for="Manufacturer" class="form-control" />
+                <div class="validation-area text-danger">
+                    <span asp-validation-for="Manufacturer"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label">*Model</label>
+                <input asp-for="Model" class="form-control" />
+                <div class="validation-area text-danger">
+                    <span asp-validation-for="Model"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label">*Year</label>
+                <input asp-for="Year" class="form-control" />
+                <div class="validation-area text-danger">
+                    <span asp-validation-for="Year"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Condition" class="control-label">*Condition</label>
+                <select asp-for="Condition" asp-items="Html.GetEnumSelectList<ConditionType>()" class="form-control">
+                    <option value="">Please select</option>
+                </select>
+                <div class="validation-area text-danger">
+                    <span asp-validation-for="Condition"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Body" class="control-label">*Body</label>
+                <select asp-for="Body" asp-items="Html.GetEnumSelectList<BodyType>()" class="form-control">
+                    <option value="">Please select</option>
+                </select>
+                <div class="validation-area text-danger">
+                    <span asp-validation-for="Body"></span>
+                </div>
+            </div>
+
+            <h4 class="mt-4">Technical Specifications</h4>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Fuel" class="control-label">*Fuel</label>
+                <select asp-for="Fuel" asp-items="Html.GetEnumSelectList<FuelType>()" class="form-control">
+                    <option value="">Please select</option>
+                </select>
+                <div class="validation-area text-danger">
+                    <span asp-validation-for="Fuel"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mileage" class="control-label">*Mileage in Km</label>
+                <input asp-for="Mileage" class="form-control" />
+                <div class="validation-area text-danger">
+                    <span asp-validation-for="Mileage"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4 class="mt-4">Other Details</h4>
+            <hr />
+            <div class="form-group">
+                <label asp-for="LicensePlate" class="control-label">*License Plate</label>
+                <input asp-for="LicensePlate" class="form-control" id="LicensePlate" />
+                <div class="validation-area text-danger" style="min-height:1.1em;">
+                    <span asp-validation-for="LicensePlate"></span>
+                    <span id="licenseplate-error"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="OtherDetails" class="control-label">Other Details</label>
+                <textarea asp-for="OtherDetails" class="form-control" rows="4"></textarea>
+                <div class="validation-area text-danger">
+                    <span asp-validation-for="OtherDetails"></span>
+                </div>
+            </div>
+            <div class="form-group mt-3 d-flex gap-2">
+                <button type="submit" form="vehicle-form" id="submit-btn" class="btn btn-primary">Save</button>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                <button type="button" class="btn btn-danger" id="delete-trigger">Delete</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form asp-action="Delete" method="post" id="delete-form" style="display:none;">
+    <input type="hidden" asp-for="Id" />
+</form>
+
+<script>
+    document.getElementById('delete-trigger').addEventListener('click', function () {
+        if (confirm('Are you sure you want to delete this vehicle?')) {
+            document.getElementById('delete-form').submit();
+        }
+    });
+</script>
+
+<style>
+    .form-group {
+        margin-bottom: 0.35rem;
+    }
+    .validation-area {
+        min-height: 1.1em;
+        font-size: 0.8rem;
+        line-height: 1.1;  
+    }
+    h4.mt-3, h4.mt-4 {
+        margin-top: 0.5rem;
+        margin-bottom: 0.2rem;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(function () {
+                const plateInput = $('#LicensePlate');
+                const errorMsg = $('#licenseplate-error');
+                const submitBtn = $('#submit-btn');
+
+                plateInput.on('input', function () {
+                    const plate = plateInput.val().trim();
+                    const id = $('#Id').val();
+
+                    plateInput.removeClass('is-invalid');
+                    errorMsg.text('');
+                    submitBtn.prop('disabled', false);
+
+                    if (plate === '') return;
+
+                    $.ajax({
+                        url: '@Url.Action("IsLicensePlateAvailable", "AutaInfoes")',
+                        type: 'GET',
+                        data: { licensePlate: plate, id: id },
+                        success: function(isAvailable) {
+                            if (!isAvailable) {
+                                plateInput.addClass('is-invalid');
+                                errorMsg.text('License plate already in use.');
+                                submitBtn.prop('disabled', true);
+                            } else {
+                                plateInput.removeClass('is-invalid');
+                                errorMsg.text('');
+                                submitBtn.prop('disabled', false);
+                            }
+                        },
+                        error: function() {
+                            console.error('AJAX validation failed');
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <style>
+            .is-invalid {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+            }
+        </style>
+}

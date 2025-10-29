@@ -1,0 +1,131 @@
+﻿@model bazarappka.Models.StatisticsViewModel
+
+@{
+    ViewData["Title"] = "Vehicle Statistics";
+}
+
+<h1 class="mb-4">Vehicle Statistics</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        @if (Model.TotalVehicles > 0 || Model.LowMileage > 0 || Model.HighMileage > 0)
+        {
+            <h4>General Statistics</h4>
+            <table class="table table-bordered table-hover align-middle">
+                <tbody>
+                @if (Model.TotalVehicles > 0)
+                {
+                            <tr><th>Total Vehicles</th><td>@Model.TotalVehicles</td></tr>
+                }
+                @if (Model.LowMileage > 0)
+                {
+                            <tr><th>Low Mileage (&lt; 100,000 km)</th><td>@Model.LowMileage</td></tr>
+                }
+                @if (Model.HighMileage > 0)
+                {
+                            <tr><th>High Mileage (&gt; 200,000 km)</th><td>@Model.HighMileage</td></tr>
+                }
+                </tbody>
+            </table>
+        }
+
+        @if (Model.GasolineVehicles > 0 || Model.DieselVehicles > 0 || Model.CngLpgVehicles > 0 || Model.ElectricVehicles > 0)
+        {
+            <h4>Fuel Type Statistics</h4>
+            <table class="table table-bordered table-hover align-middle">
+                <tbody>
+                @if (Model.GasolineVehicles > 0)
+                {
+                            <tr><th>Gasoline Vehicles</th><td>@Model.GasolineVehicles</td></tr>
+                }
+                @if (Model.DieselVehicles > 0)
+                {
+                            <tr><th>Diesel Vehicles</th><td>@Model.DieselVehicles</td></tr>
+                }
+                @if (Model.CngLpgVehicles > 0)
+                {
+                            <tr><th>CNG/LPG Vehicles</th><td>@Model.CngLpgVehicles</td></tr>
+                }
+                @if (Model.ElectricVehicles > 0)
+                {
+                            <tr><th>Electric Vehicles</th><td>@Model.ElectricVehicles</td></tr>
+                }
+                </tbody>
+            </table>
+        }
+    </div>
+
+    <div class="col-md-6">
+        @if (Model.PerfectVehicles > 0 || Model.ModerateVehicles > 0 || Model.AcceptableVehicles > 0 || Model.BadVehicles > 0)
+        {
+            <h4>Condition Statistics</h4>
+            <table class="table table-bordered table-hover align-middle">
+                <tbody>
+                @if (Model.PerfectVehicles > 0)
+                {
+                            <tr><th>Perfect Condition</th><td>@Model.PerfectVehicles</td></tr>
+                }
+                @if (Model.ModerateVehicles > 0)
+                {
+                            <tr><th>Moderate Condition</th><td>@Model.ModerateVehicles</td></tr>
+                }
+                @if (Model.AcceptableVehicles > 0)
+                {
+                            <tr><th>Acceptable Condition</th><td>@Model.AcceptableVehicles</td></tr>
+                }
+                @if (Model.BadVehicles > 0)
+                {
+                            <tr><th>Bad Condition</th><td>@Model.BadVehicles</td></tr>
+                }
+                </tbody>
+            </table>
+         }
+
+        @if (Model.BranNewVehicles > 0 || Model.ClassicCars > 0)
+        {
+            <h4>Special</h4>
+            <table class="table table-bordered table-hover align-middle">
+                <tbody>
+                @if (Model.BranNewVehicles > 0)
+                {
+                            <tr><th>Brand New Vehicles (≤ 2 years, &lt; 25,000 km)</th><td>@Model.BranNewVehicles</td></tr>
+                }
+                @if (Model.ClassicCars > 0)
+                {
+                            <tr><th>Classic Cars (≥ 30 years, Perfect Condition)</th><td>@Model.ClassicCars</td></tr>
+                }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<style>
+    h4 {
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+    }
+
+    table {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    th {
+        width: 70%;
+        background-color: #f8f9fa;
+        font-weight: 500;
+    }
+
+    td {
+        text-align: right;
+        font-weight: 600;
+    }
+
+    tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+        transition: background-color 0.2s ease-in-out;
+    }
+</style>
