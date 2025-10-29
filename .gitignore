@@ -1,10 +1,39 @@
-﻿# Visual Studio / .NET
-bin/
-obj/
+﻿# Visual Studio
+.vs/
 *.user
 *.suo
-*.vs/
-*.db
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+bin/
+obj/
+
+# Database files
 *.mdf
+*.ldf
+*.db
+BazarDB/
+
+# User-specific settings
 appsettings.Development.json
-SeedData.json
+launchSettings.json
+
+# Logs
+*.log
+
+# Optional: include your seed JSON file if you want to push it
+# SeedData.json
+
+# Rider
+.idea/
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Node / npm (if using front-end tooling)
+node_modules/
+
+# Publish folder
+publish/
